@@ -1,229 +1,178 @@
-# scripts/planetary_calendar.py - REFINED (ONLY EXACT ASPECTS)
+# scripts/planetary_data.py - UPDATED WITH CORRECT BSP PATH
 
 import pandas as pd
 import numpy as np
+from skyfield.api import load, Topos
 from datetime import datetime, timedelta
-import sys
 from pathlib import Path
 import logging
 
-sys.path.insert(0, str(Path(__file__).parent.parent))
-from scripts.planetary_data import compute_planetary_positions
-
+# Setup logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-def detect_major_aspects(start_date, end_date):
-    """Detect major planetary aspects (crash indicators) - EXACT ONLY"""
+# Define paths
+PROJECT_ROOT = Path(__file__).parent.parent
+DATA_RAW = PROJECT_ROOT / 'data' / 'raw'
+DATA_PROCESSED = PROJECT_ROOT / 'data' / 'processed'
+
+# Ensure directories exist
+DATA_RAW.mkdir(parents=True, exist_ok=True)
+DATA_PROCESSED.mkdir(parents=True, exist_ok=True)
+
+# BSP file path
+BSP_FILE = DATA_RAW / 'de421.bsp'
+
+
+def compute_planetary_positions(start_date, end_date):
+    """
+    Compute planetary positions for date range
     
-    logger.info("🌙 PLANETARY EVENT CALENDAR (EXACT ASPECTS ONLY)")
-    logger.info("=" * 60)
+    Args:
+        start_date: Start date (YYYY-MM-DD)
+        end_date: End date (YYYY-MM-DD)
     
-    # Compute positions
-    df = compute_planetary_positions(start_date, end_date)
-    df['date'] = pd.to_datetime(df['date'])
-    df = df.reset_index(drop=True)
+    Returns:
+        DataFrame with planetary positions
+    """
     
-    events = []
+    logger.info(f"🌙 Computing planetary positions: {start_date} to {end_date}")
     
-    # Pre-compute all aspect angles
-    aspect_pairs = [
-        ('saturn', 'pluto', 0, 'CRITICAL', 'Saturn-Pluto Conjunction', 'MAJOR MARKET CRASH RISK'),
-        ('saturn', 'uranus', 90, 'HIGH', 'Saturn-Uranus Square', 'MODERATE CORRECTION RISK'),
-        ('jupiter', 'saturn', 0, 'HIGH', 'Jupiter-Saturn Conjunction', 'MAJOR TREND SHIFT (20-yr cycle)'),
-        ('jupiter', 'pluto', 0, 'MEDIUM', 'Jupiter-Pluto Conjunction', 'WEALTH/POWER RESTRUCTURING'),
-        ('mars', 'saturn', 90, 'MEDIUM', 'Mars-Saturn Square', 'MARKET FRUSTRATION/DELAYS'),
-    ]
+    # Check if BSP file exists
+    if not BSP_FILE.exists():
+        logger.error(f"❌ BSP file not found: {BSP_FILE}")
+        logger.info(f"💡 Download from: https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/de421.bsp")
+        logger.info(f"💡 Save to: {BSP_FILE}")
+        raise FileNotFoundError(f"BSP file not found at {BSP_FILE}")
     
-    # Check conjunctions/squares between major planets
-    for p1, p2, target_angle, severity, event_name, impact in aspect_pairs:
-        lon1_col = f'{p1}_longitude'
-        lon2_col = f'{p2}_longitude'
-        
-        if lon1_col in df.columns and lon2_col in df.columns:
-            df['angle_temp'] = np.minimum(
-                abs(df[lon1_col] - df[lon2_col]) % 360,
-                360 - abs(df[lon1_col] - df[lon2_col]) % 360
-            )
-            
-            # For squares, check angle near 90°
-            if target_angle == 90:
-                df['in_orb'] = (df['angle_temp'] >= 85) & (df['angle_temp'] <= 95)
-            else:  # Conjunctions (0°)
-                df['in_orb'] = df['angle_temp'] < 5
-            
-            # Find exact moments (when aspect becomes exact - minimum angle)
-            for idx in range(1, len(df)-1):
-                if df.loc[idx, 'in_orb']:
-                    prev_angle = df.loc[idx-1, 'angle_temp'] if target_angle == 0 else abs(df.loc[idx-1, 'angle_temp'] - 90)
-                    curr_angle = df.loc[idx, 'angle_temp'] if target_angle == 0 else abs(df.loc[idx, 'angle_temp'] - 90)
-                    next_angle = df.loc[idx+1, 'angle_temp'] if target_angle == 0 else abs(df.loc[idx+1, 'angle_temp'] - 90)
-                    
-                    # Local minimum = exact aspect
-                    if curr_angle <= prev_angle and curr_angle <= next_angle:
-                        events.append({
-                            'date': df.loc[idx, 'date'],
-                            'event': event_name,
-                            'severity': severity,
-                            'exactness': f"{curr_angle:.2f}°",
-                            'impact': impact
-                        })
+    logger.info(f"✓ Using BSP file: {BSP_FILE}")
     
-    # Retrograde periods (only start dates)
-    retrograde_planets = ['mercury', 'venus', 'mars', 'jupiter', 'saturn']
-    retrograde_impacts = {
-        'mercury': ('LOW', 'Communication/tech volatility'),
-        'venus': ('MEDIUM', 'Financial sector stress (rare)'),
-        'mars': ('MEDIUM', 'Market aggression/volatility'),
-        'jupiter': ('LOW', 'Economic expansion pause'),
-        'saturn': ('HIGH', 'Structural market weakness')
+    # Load ephemeris
+    try:
+        eph = load(str(BSP_FILE))
+        logger.info("✓ Ephemeris loaded successfully")
+    except Exception as e:
+        logger.error(f"❌ Error loading ephemeris: {e}")
+        raise
+    
+    # Create timescale
+    ts = load.timescale()
+    
+    # Generate date range
+    start = datetime.strptime(start_date, '%Y-%m-%d')
+    end = datetime.strptime(end_date, '%Y-%m-%d')
+    dates = pd.date_range(start=start, end=end, freq='D')
+    
+    logger.info(f"✓ Processing {len(dates)} days...")
+    
+    # Planet codes
+    planets = {
+        'sun': 10,
+        'moon': 301,
+        'mercury': 1,
+        'venus': 2,
+        'mars': 4,
+        'jupiter': 5,
+        'saturn': 6,
+        'uranus': 7,
+        'neptune': 8,
+        'pluto': 9
     }
     
-    for planet in retrograde_planets:
-        lon_col = f'{planet}_longitude'
+    # Earth
+    earth = eph[399]
+    
+    # Compute positions
+    data = []
+    
+    for date in dates:
+        t = ts.utc(date.year, date.month, date.day)
+        
+        row = {'date': date}
+        
+        # Get positions for each planet
+        for planet_name, planet_code in planets.items():
+            try:
+                planet = eph[planet_code]
+                
+                # Position relative to Earth
+                astrometric = earth.at(t).observe(planet)
+                ra, dec, distance = astrometric.radec()
+                
+                # Ecliptic longitude (approximate)
+                lon = ra.degrees
+                
+                row[f'{planet_name}_longitude'] = lon
+                row[f'{planet_name}_distance'] = distance.au
+                
+            except Exception as e:
+                logger.warning(f"Could not compute {planet_name}: {e}")
+                row[f'{planet_name}_longitude'] = np.nan
+                row[f'{planet_name}_distance'] = np.nan
+        
+        data.append(row)
+    
+    # Create DataFrame
+    df = pd.DataFrame(data)
+    
+    # Calculate velocities (rate of change)
+    for planet_name in planets.keys():
+        lon_col = f'{planet_name}_longitude'
         if lon_col in df.columns:
-            df['velocity'] = df[lon_col].diff()
-            df['is_rx'] = df['velocity'] < 0
-            
-            # Find retrograde start (direction changes)
-            for idx in range(2, len(df)):
-                if df.loc[idx, 'is_rx'] and not df.loc[idx-1, 'is_rx']:
-                    severity, impact = retrograde_impacts.get(planet, ('LOW', 'Market uncertainty'))
-                    events.append({
-                        'date': df.loc[idx, 'date'],
-                        'event': f'{planet.title()} Retrograde Starts',
-                        'severity': severity,
-                        'exactness': 'Station',
-                        'impact': impact
-                    })
-                elif not df.loc[idx, 'is_rx'] and df.loc[idx-1, 'is_rx']:
-                    events.append({
-                        'date': df.loc[idx, 'date'],
-                        'event': f'{planet.title()} Direct (Rx ends)',
-                        'severity': 'LOW',
-                        'exactness': 'Station',
-                        'impact': 'Volatility eases'
-                    })
+            df[f'{planet_name}_velocity'] = df[lon_col].diff()
     
-    # New/Full Moons (eclipses possible)
-    if 'sun_longitude' in df.columns and 'moon_longitude' in df.columns:
-        df['sun_moon_angle'] = np.minimum(
-            abs(df['sun_longitude'] - df['moon_longitude']) % 360,
-            360 - abs(df['sun_longitude'] - df['moon_longitude']) % 360
-        )
-        
-        # Find exact New Moons (conjunction)
-        for idx in range(1, len(df)-1):
-            curr = df.loc[idx, 'sun_moon_angle']
-            prev = df.loc[idx-1, 'sun_moon_angle']
-            next_val = df.loc[idx+1, 'sun_moon_angle']
-            
-            if curr < 5 and curr <= prev and curr <= next_val:
-                events.append({
-                    'date': df.loc[idx, 'date'],
-                    'event': 'New Moon (Eclipse Window)',
-                    'severity': 'MEDIUM',
-                    'exactness': f"{curr:.2f}°",
-                    'impact': 'New trend initiation'
-                })
-        
-        # Find exact Full Moons (opposition)
-        df['opposition_angle'] = abs(df['sun_moon_angle'] - 180)
-        for idx in range(1, len(df)-1):
-            curr = df.loc[idx, 'opposition_angle']
-            prev = df.loc[idx-1, 'opposition_angle']
-            next_val = df.loc[idx+1, 'opposition_angle']
-            
-            if curr < 5 and curr <= prev and curr <= next_val:
-                events.append({
-                    'date': df.loc[idx, 'date'],
-                    'event': 'Full Moon (Eclipse Window)',
-                    'severity': 'MEDIUM',
-                    'exactness': f"{180 - curr:.2f}°",
-                    'impact': 'Sentiment climax/reversal'
-                })
+    logger.info(f"✓ Computed positions for {len(df)} days")
+    logger.info(f"✓ Planets: {', '.join(planets.keys())}")
     
-    events_df = pd.DataFrame(events)
-    
-    if not events_df.empty:
-        events_df = events_df.drop_duplicates(subset=['date', 'event'])
-        events_df = events_df.sort_values('date').reset_index(drop=True)
-    
-    events_df.to_csv('planetary_events_calendar.csv', index=False)
-    
-    logger.info(f"✓ Detected {len(events_df)} EXACT planetary events")
-    
-    if not events_df.empty:
-        logger.info(f"\nSeverity Breakdown:")
-        logger.info(f"  CRITICAL: {(events_df['severity']=='CRITICAL').sum()}")
-        logger.info(f"  HIGH:     {(events_df['severity']=='HIGH').sum()}")
-        logger.info(f"  MEDIUM:   {(events_df['severity']=='MEDIUM').sum()}")
-        logger.info(f"  LOW:      {(events_df['severity']=='LOW').sum()}")
-    else:
-        logger.info("  No major events in this period")
-    
-    return events_df
+    return df
 
-def predict_next_crash(events_df):
-    """Predict next major market crash"""
-    
-    if events_df.empty:
-        logger.info("\n✅ No critical crash signals in next 365 days")
-        return
-    
-    today = datetime.now().date()
-    events_df['date'] = pd.to_datetime(events_df['date'])
-    future_events = events_df[events_df['date'].dt.date > today]
-    
-    critical = future_events[future_events['severity'] == 'CRITICAL']
-    high = future_events[future_events['severity'] == 'HIGH']
-    
-    logger.info("\n" + "=" * 60)
-    logger.info("🚨 CRASH RISK ASSESSMENT")
-    logger.info("=" * 60)
-    
-    if not critical.empty:
-        next_critical = critical.iloc[0]
-        days_until = (next_critical['date'].date() - today).days
-        logger.info(f"⚠️  CRITICAL CRASH SIGNAL:")
-        logger.info(f"   📅 Date: {next_critical['date'].date()}")
-        logger.info(f"   🌙 Event: {next_critical['event']}")
-        logger.info(f"   🎯 Exactness: {next_critical['exactness']}")
-        logger.info(f"   💥 Impact: {next_critical['impact']}")
-        logger.info(f"   ⏰ Days Until: {days_until}")
-        logger.info(f"\n   🚨 RECOMMENDATION: REDUCE EXPOSURE / HEDGE PORTFOLIO")
-    elif not high.empty:
-        next_high = high.iloc[0]
-        days_until = (next_high['date'].date() - today).days
-        logger.info(f"⚠️  HIGH-RISK EVENT:")
-        logger.info(f"   📅 Date: {next_high['date'].date()}")
-        logger.info(f"   🌙 Event: {next_high['event']}")
-        logger.info(f"   🎯 Exactness: {next_high['exactness']}")
-        logger.info(f"   💥 Impact: {next_high['impact']}")
-        logger.info(f"   ⏰ Days Until: {days_until}")
-        logger.info(f"\n   ⚠️  RECOMMENDATION: CAUTION / WATCH CLOSELY")
-    else:
-        logger.info("✅ No critical crash signals detected")
-        logger.info("   Market conditions: FAVORABLE for long positions")
+
+def save_planetary_data(df, filename='planetary_positions.csv'):
+    """Save planetary data to processed folder"""
+    output_path = DATA_PROCESSED / filename
+    df.to_csv(output_path, index=False)
+    logger.info(f"✓ Saved to: {output_path}")
+    return output_path
+
 
 if __name__ == "__main__":
-    start_date = datetime.now().strftime('%Y-%m-%d')
-    end_date = (datetime.now() + timedelta(days=365)).strftime('%Y-%m-%d')
+    logger.info("=" * 60)
+    logger.info("🌙 ASTRO FINANCE ML - PLANETARY DATA GENERATOR")
+    logger.info("=" * 60)
+    logger.info(f"Project Root: {PROJECT_ROOT}")
+    logger.info(f"BSP File: {BSP_FILE}")
+    logger.info(f"Output: {DATA_PROCESSED}")
+    logger.info("")
     
-    events_df = detect_major_aspects(start_date, end_date)
-    predict_next_crash(events_df)
+    # Test: Compute last 30 days
+    end_date = datetime.now()
+    start_date = end_date - timedelta(days=30)
     
-    if not events_df.empty:
-        print("\n📅 UPCOMING MAJOR EVENTS (Next 15):")
-        print("=" * 80)
-        print(events_df.head(15)[['date', 'event', 'severity', 'exactness', 'impact']].to_string(index=False))
+    try:
+        df = compute_planetary_positions(
+            start_date.strftime('%Y-%m-%d'),
+            end_date.strftime('%Y-%m-%d')
+        )
         
-        # Summary stats
-        print(f"\n📊 1-YEAR OUTLOOK SUMMARY:")
-        print(f"   Total Events: {len(events_df)}")
-        print(f"   Critical: {(events_df['severity']=='CRITICAL').sum()}")
-        print(f"   High Risk: {(events_df['severity']=='HIGH').sum()}")
-        print(f"   Retrogrades: {events_df['event'].str.contains('Retrograde').sum()}")
-        print(f"   Eclipses: {events_df['event'].str.contains('Moon').sum()}")
-    else:
-        print("\n✅ Calm planetary period - no major crash indicators")
+        print("\n📊 SAMPLE DATA (Last 5 Days):")
+        print("=" * 80)
+        print(df.tail(5)[['date', 'sun_longitude', 'moon_longitude', 'saturn_longitude']].to_string(index=False))
+        
+        # Save
+        output_path = save_planetary_data(df)
+        
+        print(f"\n✅ SUCCESS!")
+        print(f"   Data saved to: {output_path}")
+        print(f"   Rows: {len(df)}")
+        print(f"   Columns: {len(df.columns)}")
+        
+    except FileNotFoundError as e:
+        logger.error(f"\n❌ {e}")
+        logger.info("\n💡 TO FIX:")
+        logger.info(f"   1. Download de421.bsp from NASA")
+        logger.info(f"   2. Save to: {BSP_FILE}")
+        
+    except Exception as e:
+        logger.error(f"\n❌ Error: {e}")
+        import traceback
+        traceback.print_exc()
