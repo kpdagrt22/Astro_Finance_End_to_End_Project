@@ -1,0 +1,83 @@
+{
+  "mercury_retrograde": {
+    "periods": 5,
+    "total_days": 207,
+    "dates": [
+      {
+        "start": "2025-01-02",
+        "end": "2025-02-06",
+        "days": 36
+      },
+      {
+        "start": "2025-03-21",
+        "end": "2025-04-30",
+        "days": 41
+      },
+      {
+        "start": "2025-06-16",
+        "end": "2025-07-31",
+        "days": 46
+      },
+      {
+        "start": "2025-09-09",
+        "end": "2025-11-02",
+        "days": 55
+      },
+      {
+        "start": "2025-12-03",
+        "end": "2025-12-31",
+        "days": 29
+      }
+    ]
+  },
+  "major_aspects": [
+    "Jupiter-Saturn Conjunction (365 days)",
+    "Jupiter-Uranus Conjunction (365 days)",
+    "Jupiter-Neptune Conjunction (365 days)",
+    "Jupiter-Pluto Conjunction (365 days)",
+    "Saturn-Uranus Conjunction (365 days)",
+    "Saturn-Neptune Conjunction (365 days)",
+    "Saturn-Pluto Conjunction (365 days)",
+    "Uranus-Neptune Conjunction (365 days)",
+    "Uranus-Pluto Conjunction (365 days)",
+    "Neptune-Pluto Conjunction (365 days)"
+  ],
+  "quarterly": {
+    "Q1": {
+      "sentiment": "BEARISH",
+      "volatility": "HIGH",
+      "mercury_rx_days": 47,
+      "avg_moon_velocity": 0
+    },
+    "Q2": {
+      "sentiment": "BEARISH",
+      "volatility": "HIGH",
+      "mercury_rx_days": 45,
+      "avg_moon_velocity": 0
+    },
+    "Q3": {
+      "sentiment": "BEARISH",
+      "volatility": "HIGH",
+      "mercury_rx_days": 53,
+      "avg_moon_velocity": 0
+    },
+    "Q4": {
+      "sentiment": "BEARISH",
+      "volatility": "HIGH",
+      "mercury_rx_days": 62,
+      "avg_moon_velocity": 0
+    }
+  },
+  "favorable_windows": [
+    {
+      "start": "2025-01-02",
+      "end": "2025-02-26",
+      "days": 56
+    },
+    {
+      "start": "2025-09-29",
+      "end": "2025-12-31",
+      "days": 94
+    }
+  ]
+}

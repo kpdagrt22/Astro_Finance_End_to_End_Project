@@ -22,3 +22,5 @@ xgboost
 tensorflow
 joblib
 yfinance
+streamlit
+plotly
