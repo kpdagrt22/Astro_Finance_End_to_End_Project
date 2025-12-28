@@ -21,6 +21,28 @@ warnings.filterwarnings('ignore')
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+# scripts/train_models.py - UPDATED PATHS
+
+import pandas as pd
+from pathlib import Path
+
+# Define paths
+DATA_DIR = Path(__file__).parent.parent / 'data' / 'processed'
+MODEL_DIR = Path(__file__).parent.parent / 'models'
+
+# Load features
+print("Loading features...")
+features_full = pd.read_parquet(DATA_DIR / 'features_full.parquet')
+features_selected = pd.read_parquet(DATA_DIR / 'features_selected.parquet')
+
+# Train models
+# ... your training code ...
+
+# Save models
+import joblib
+joblib.dump(xgb_model, MODEL_DIR / 'xgboost_model.pkl')
+print(f"✅ Model saved to {MODEL_DIR / 'xgboost_model.pkl'}")
+
 def load_features():
     """Load feature datasets"""
     logger.info("Loading feature datasets...")

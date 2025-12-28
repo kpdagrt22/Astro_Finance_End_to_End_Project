@@ -11,6 +11,35 @@ import numpy as np
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
+# dashboard/app.py - UPDATED PATHS
+
+from pathlib import Path
+
+# Define paths
+DATA_DIR = Path(__file__).parent.parent / 'data' / 'processed'
+MODEL_DIR = Path(__file__).parent.parent / 'models'
+
+@st.cache_data(ttl=60)
+def get_crash_score():
+    """Calculate crash risk score"""
+    try:
+        # Load from processed data folder
+        events_df = pd.read_csv(DATA_DIR / 'planetary_events_calendar.csv')
+        events_df['date'] = pd.to_datetime(events_df['date'])
+        # ... rest of code
+    except:
+        return 0
+
+@st.cache_data(ttl=300)
+def get_predictions():
+    """Load predictions"""
+    try:
+        df = pd.read_csv(DATA_DIR / 'predictions_future_90d.csv')
+        df['date'] = pd.to_datetime(df['date'])
+        return df
+    except:
+        return pd.DataFrame()
+
 # Page config
 st.set_page_config(
     page_title="🌙 Astro Finance ML - AI Stock Market Crash Predictor",
