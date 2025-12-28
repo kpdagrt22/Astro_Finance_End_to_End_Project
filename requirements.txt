@@ -17,3 +17,8 @@ python-dotenv
 skyfield
 tqdm
 requests
+pyarrow
+xgboost
+tensorflow
+joblib
+yfinance
