@@ -1,0 +1,8 @@
+pyproject.toml
+setup.py
+drikpanchang_scraper.egg-info/PKG-INFO
+drikpanchang_scraper.egg-info/SOURCES.txt
+drikpanchang_scraper.egg-info/dependency_links.txt
+drikpanchang_scraper.egg-info/entry_points.txt
+drikpanchang_scraper.egg-info/requires.txt
+drikpanchang_scraper.egg-info/top_level.txt
