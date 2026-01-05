@@ -1,60 +1,33 @@
-# Navagraha (9-planet) pipeline configuration
+# Navagraha Pipeline Configuration
 
-scraping:
-  enabled: true
-  start_year: 1900
-  end_year: 2025
-  location: "New Delhi, India"
-  endpoint_types:
-    - rashi
-    - nakshatra
-  cache_dir: "data/raw/drikpanchang/"
+data:
+  events_path: "data/processed/drikpanchang/events_all_planets_merged.csv"
+  prices_path: "data/sp500_prices.csv"
 
-feature_engineering:
-  enabled: true
-  frequency: "D"  # Daily (or "W" for weekly)
-  
-  individual_planet_features:
-    enabled: true
-    include_pada_features: true
-  
-  navagraha_stability:
-    enabled: true
-    compute_occupancy: true
-    compute_entropy: true
-  
-  planet_pair_interactions:
-    enabled: true
-    all_pairs: true  # 36 pairs (9 choose 2)
-  
-  advanced_interactions:
-    enabled: true
-    planetary_war_index: true
-    yoga_strength: true
-    cluster_coherence: true
-    malefic_benefic_balance: true
+features:
+  start_date: "1900-01-01"
+  end_date: "2025-12-31"
+  params:
+    include_interactions: true
+    include_stability_metrics: true
+    include_advanced_features: true
+    include_dasha_cycles: true
 
-modeling:
-  enabled: true
-  validation:
-    method: "walk_forward"
-    train_window_years: 50
-    test_window_years: 5
-    step_size_years: 5
+labels:
+  params:
+    strategies: ['drawdown', 'volatility', 'event', 'combined']
+    drawdown_threshold: 0.10
+    volatility_threshold: 0.02
+    event_window_days: 30
 
-ablation:
-  enabled: true
-  feature_groups:
-    - "sun_moon"
-    - "inner_planets"          # Mercury, Venus, Mars
-    - "outer_planets"          # Jupiter, Saturn
-    - "nodes"                   # Rahu, Ketu
-    - "fast_planets"            # Moon, Mercury, Venus
-    - "slow_planets"            # Jupiter, Saturn, Nodes
-    - "all_individual"
-    - "all_with_stability"
-    - "all_with_interactions"
-    - "full"
+validation:
+  params:
+    class_weights: {0: 1.0, 1: 15.0}
+    train_years: 50
+    test_years: 5
+    stride_years: 5
+    random_state: 42
+  target_auc: 0.72
 
-output_dir: "results_navagraha/"
-logging_level: "INFO"
+output:
+  dir: "results_navagraha"
