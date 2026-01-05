@@ -1,0 +1,10 @@
+planet,endpoint_type,to_nakshatra,to_pada,event_utc_dt,year
+saturn,nakshatra,Revati,4,1902-05-17T03:16:31.406250+00:00,1902
+saturn,nakshatra,Ashwini,1,1916-09-21T22:29:17.812500+00:00,1916
+saturn,nakshatra,Revati,4,1931-10-18T04:38:47.343750+00:00,1931
+saturn,nakshatra,Ashwini,1,1946-02-24T20:25:11.718750+00:00,1946
+saturn,nakshatra,Revati,4,1961-04-01T12:53:26.250000+00:00,1961
+saturn,nakshatra,Ashwini,1,1975-08-08T19:05:23.437500+00:00,1975
+saturn,nakshatra,Revati,4,1990-09-03T10:28:35.625000+00:00,1990
+saturn,nakshatra,Ashwini,1,2005-01-09T00:56:36.093750+00:00,2005
+saturn,nakshatra,Revati,4,2020-02-15T02:28:00.468750+00:00,2020

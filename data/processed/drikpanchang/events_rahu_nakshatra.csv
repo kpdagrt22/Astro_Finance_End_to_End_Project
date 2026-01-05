@@ -1,0 +1,184 @@
+planet,endpoint_type,to_nakshatra,to_pada,event_utc_dt,year
+rahu,nakshatra,Mula,4,1900-04-20T23:00:14.062500+00:00,1900
+rahu,nakshatra,Jyeshtha,4,1900-12-28T17:55:25.781250+00:00,1900
+rahu,nakshatra,Anuradha,4,1901-09-06T12:55:53.906250+00:00,1901
+rahu,nakshatra,Vishakha,4,1902-05-16T07:56:22.031250+00:00,1902
+rahu,nakshatra,Svati,4,1903-01-23T02:56:50.156250+00:00,1903
+rahu,nakshatra,Chitra,4,1903-10-01T21:57:18.281250+00:00,1903
+rahu,nakshatra,Hasta,4,1904-06-09T16:57:46.406250+00:00,1904
+rahu,nakshatra,Uttara Phalguni,4,1905-02-16T11:58:14.531250+00:00,1905
+rahu,nakshatra,Purva Phalguni,4,1905-10-26T06:58:42.656250+00:00,1905
+rahu,nakshatra,Magha,4,1906-07-05T01:59:10.781250+00:00,1906
+rahu,nakshatra,Ashlesha,4,1907-03-13T20:59:38.906250+00:00,1907
+rahu,nakshatra,Pushya,4,1907-11-20T16:00:07.031250+00:00,1907
+rahu,nakshatra,Punarvasu,4,1908-07-29T11:00:35.156250+00:00,1908
+rahu,nakshatra,Ardra,4,1909-04-07T06:01:03.281250+00:00,1909
+rahu,nakshatra,Mrigashirsha,4,1909-12-15T01:01:31.406250+00:00,1909
+rahu,nakshatra,Rohini,4,1910-08-23T20:01:59.531250+00:00,1910
+rahu,nakshatra,Krittika,4,1911-05-02T15:02:27.656250+00:00,1911
+rahu,nakshatra,Bharani,4,1912-01-09T10:02:55.781250+00:00,1912
+rahu,nakshatra,Ashwini,4,1912-09-17T04:58:07.500000+00:00,1912
+rahu,nakshatra,Revati,4,1913-05-26T23:58:35.625000+00:00,1913
+rahu,nakshatra,Uttara Bhadrapada,4,1914-02-02T18:59:03.750000+00:00,1914
+rahu,nakshatra,Purva Bhadrapada,4,1914-10-12T13:59:31.875000+00:00,1914
+rahu,nakshatra,Shatabhisha,4,1915-06-21T09:00:00+00:00,1915
+rahu,nakshatra,Dhanishta,4,1916-02-28T04:00:28.125000+00:00,1916
+rahu,nakshatra,Shravana,4,1916-11-05T23:00:56.250000+00:00,1916
+rahu,nakshatra,Uttara Ashadha,4,1917-07-15T18:01:24.375000+00:00,1917
+rahu,nakshatra,Purva Ashadha,4,1918-03-24T13:01:52.500000+00:00,1918
+rahu,nakshatra,Mula,4,1918-12-01T08:02:20.625000+00:00,1918
+rahu,nakshatra,Jyeshtha,4,1919-08-10T03:02:48.750000+00:00,1919
+rahu,nakshatra,Anuradha,4,1920-04-17T22:03:16.875000+00:00,1920
+rahu,nakshatra,Vishakha,4,1920-12-25T17:03:45+00:00,1920
+rahu,nakshatra,Svati,4,1921-09-03T12:04:13.125000+00:00,1921
+rahu,nakshatra,Chitra,4,1922-05-13T07:04:41.250000+00:00,1922
+rahu,nakshatra,Hasta,4,1923-01-20T02:05:09.375000+00:00,1923
+rahu,nakshatra,Uttara Phalguni,4,1923-09-28T21:00:21.093750+00:00,1923
+rahu,nakshatra,Purva Phalguni,4,1924-06-06T16:00:49.218750+00:00,1924
+rahu,nakshatra,Magha,4,1925-02-13T11:01:17.343750+00:00,1925
+rahu,nakshatra,Ashlesha,4,1925-10-23T06:01:45.468750+00:00,1925
+rahu,nakshatra,Pushya,4,1926-07-02T01:02:13.593750+00:00,1926
+rahu,nakshatra,Punarvasu,4,1927-03-10T20:02:41.718750+00:00,1927
+rahu,nakshatra,Ardra,4,1927-11-17T15:03:09.843750+00:00,1927
+rahu,nakshatra,Mrigashirsha,4,1928-07-26T10:03:37.968750+00:00,1928
+rahu,nakshatra,Rohini,4,1929-04-04T05:04:06.093750+00:00,1929
+rahu,nakshatra,Krittika,4,1929-12-12T00:04:34.218750+00:00,1929
+rahu,nakshatra,Bharani,4,1930-08-20T19:05:02.343750+00:00,1930
+rahu,nakshatra,Ashwini,4,1931-04-29T14:05:30.468750+00:00,1931
+rahu,nakshatra,Revati,4,1932-01-06T09:05:58.593750+00:00,1932
+rahu,nakshatra,Uttara Bhadrapada,4,1932-09-14T04:06:26.718750+00:00,1932
+rahu,nakshatra,Purva Bhadrapada,4,1933-05-23T23:06:54.843750+00:00,1933
+rahu,nakshatra,Shatabhisha,4,1934-01-30T18:07:22.968750+00:00,1934
+rahu,nakshatra,Dhanishta,4,1934-10-09T13:07:51.093750+00:00,1934
+rahu,nakshatra,Shravana,4,1935-06-18T08:03:02.812500+00:00,1935
+rahu,nakshatra,Uttara Ashadha,4,1936-02-25T03:03:30.937500+00:00,1936
+rahu,nakshatra,Purva Ashadha,4,1936-11-02T22:03:59.062500+00:00,1936
+rahu,nakshatra,Mula,4,1937-07-12T17:04:27.187500+00:00,1937
+rahu,nakshatra,Jyeshtha,4,1938-03-21T12:04:55.312500+00:00,1938
+rahu,nakshatra,Anuradha,4,1938-11-28T07:05:23.437500+00:00,1938
+rahu,nakshatra,Vishakha,4,1939-08-07T02:05:51.562500+00:00,1939
+rahu,nakshatra,Svati,4,1940-04-14T21:06:19.687500+00:00,1940
+rahu,nakshatra,Chitra,4,1940-12-22T16:06:47.812500+00:00,1940
+rahu,nakshatra,Hasta,4,1941-08-31T11:07:15.937500+00:00,1941
+rahu,nakshatra,Uttara Phalguni,4,1942-05-10T06:07:44.062500+00:00,1942
+rahu,nakshatra,Purva Phalguni,4,1943-01-17T01:08:12.187500+00:00,1943
+rahu,nakshatra,Magha,4,1943-09-25T20:08:40.312500+00:00,1943
+rahu,nakshatra,Ashlesha,4,1944-06-03T15:09:08.437500+00:00,1944
+rahu,nakshatra,Pushya,4,1945-02-10T10:09:36.562500+00:00,1945
+rahu,nakshatra,Punarvasu,4,1945-10-20T05:10:04.687500+00:00,1945
+rahu,nakshatra,Ardra,4,1946-06-29T00:10:32.812500+00:00,1946
+rahu,nakshatra,Mrigashirsha,4,1947-03-07T19:05:44.531250+00:00,1947
+rahu,nakshatra,Rohini,4,1947-11-14T14:06:12.656250+00:00,1947
+rahu,nakshatra,Krittika,4,1948-07-23T09:06:40.781250+00:00,1948
+rahu,nakshatra,Bharani,4,1949-04-01T04:07:08.906250+00:00,1949
+rahu,nakshatra,Ashwini,4,1949-12-08T23:07:37.031250+00:00,1949
+rahu,nakshatra,Revati,4,1950-08-17T18:08:05.156250+00:00,1950
+rahu,nakshatra,Uttara Bhadrapada,4,1951-04-26T13:08:33.281250+00:00,1951
+rahu,nakshatra,Purva Bhadrapada,4,1952-01-03T08:09:01.406250+00:00,1952
+rahu,nakshatra,Shatabhisha,4,1952-09-11T03:09:29.531250+00:00,1952
+rahu,nakshatra,Dhanishta,4,1953-05-20T22:09:57.656250+00:00,1953
+rahu,nakshatra,Shravana,4,1954-01-27T17:10:25.781250+00:00,1954
+rahu,nakshatra,Uttara Ashadha,4,1954-10-06T12:10:53.906250+00:00,1954
+rahu,nakshatra,Purva Ashadha,4,1955-06-15T07:11:22.031250+00:00,1955
+rahu,nakshatra,Mula,4,1956-02-22T02:11:50.156250+00:00,1956
+rahu,nakshatra,Jyeshtha,4,1956-10-30T21:12:18.281250+00:00,1956
+rahu,nakshatra,Anuradha,4,1957-07-09T16:12:46.406250+00:00,1957
+rahu,nakshatra,Vishakha,4,1958-03-18T11:13:14.531250+00:00,1958
+rahu,nakshatra,Svati,4,1958-11-25T06:08:26.250000+00:00,1958
+rahu,nakshatra,Chitra,4,1959-08-04T01:08:54.375000+00:00,1959
+rahu,nakshatra,Hasta,4,1960-04-11T20:09:22.500000+00:00,1960
+rahu,nakshatra,Uttara Phalguni,4,1960-12-19T15:09:50.625000+00:00,1960
+rahu,nakshatra,Purva Phalguni,4,1961-08-28T10:10:18.750000+00:00,1961
+rahu,nakshatra,Magha,4,1962-05-07T05:10:46.875000+00:00,1962
+rahu,nakshatra,Ashlesha,4,1963-01-14T00:11:15+00:00,1963
+rahu,nakshatra,Pushya,4,1963-09-22T19:11:43.125000+00:00,1963
+rahu,nakshatra,Punarvasu,4,1964-05-31T14:12:11.250000+00:00,1964
+rahu,nakshatra,Ardra,4,1965-02-07T09:12:39.375000+00:00,1965
+rahu,nakshatra,Mrigashirsha,4,1965-10-17T04:13:07.500000+00:00,1965
+rahu,nakshatra,Rohini,4,1966-06-25T23:13:35.625000+00:00,1966
+rahu,nakshatra,Krittika,4,1967-03-04T18:14:03.750000+00:00,1967
+rahu,nakshatra,Bharani,4,1967-11-11T13:14:31.875000+00:00,1967
+rahu,nakshatra,Ashwini,4,1968-07-20T08:15:00+00:00,1968
+rahu,nakshatra,Revati,4,1969-03-29T03:15:28.125000+00:00,1969
+rahu,nakshatra,Uttara Bhadrapada,4,1969-12-05T22:15:56.250000+00:00,1969
+rahu,nakshatra,Purva Bhadrapada,4,1970-08-14T17:11:07.968750+00:00,1970
+rahu,nakshatra,Shatabhisha,4,1971-04-23T12:11:36.093750+00:00,1971
+rahu,nakshatra,Dhanishta,4,1971-12-31T07:12:04.218750+00:00,1971
+rahu,nakshatra,Shravana,4,1972-09-08T02:12:32.343750+00:00,1972
+rahu,nakshatra,Uttara Ashadha,4,1973-05-17T21:13:00.468750+00:00,1973
+rahu,nakshatra,Purva Ashadha,4,1974-01-24T16:13:28.593750+00:00,1974
+rahu,nakshatra,Mula,4,1974-10-03T11:13:56.718750+00:00,1974
+rahu,nakshatra,Jyeshtha,4,1975-06-12T06:14:24.843750+00:00,1975
+rahu,nakshatra,Anuradha,4,1976-02-19T01:14:52.968750+00:00,1976
+rahu,nakshatra,Vishakha,4,1976-10-27T20:15:21.093750+00:00,1976
+rahu,nakshatra,Svati,4,1977-07-06T15:15:49.218750+00:00,1977
+rahu,nakshatra,Chitra,4,1978-03-15T10:16:17.343750+00:00,1978
+rahu,nakshatra,Hasta,4,1978-11-22T05:16:45.468750+00:00,1978
+rahu,nakshatra,Uttara Phalguni,4,1979-08-01T00:17:13.593750+00:00,1979
+rahu,nakshatra,Purva Phalguni,4,1980-04-08T19:17:41.718750+00:00,1980
+rahu,nakshatra,Magha,4,1980-12-16T14:18:09.843750+00:00,1980
+rahu,nakshatra,Ashlesha,4,1981-08-25T09:13:21.562500+00:00,1981
+rahu,nakshatra,Pushya,4,1982-05-04T04:13:49.687500+00:00,1982
+rahu,nakshatra,Punarvasu,4,1983-01-10T23:14:17.812500+00:00,1983
+rahu,nakshatra,Ardra,4,1983-09-19T18:14:45.937500+00:00,1983
+rahu,nakshatra,Mrigashirsha,4,1984-05-28T13:15:14.062500+00:00,1984
+rahu,nakshatra,Rohini,4,1985-02-04T08:15:42.187500+00:00,1985
+rahu,nakshatra,Krittika,4,1985-10-14T03:16:10.312500+00:00,1985
+rahu,nakshatra,Bharani,4,1986-06-22T22:16:38.437500+00:00,1986
+rahu,nakshatra,Ashwini,4,1987-03-01T17:17:06.562500+00:00,1987
+rahu,nakshatra,Revati,4,1987-11-08T12:17:34.687500+00:00,1987
+rahu,nakshatra,Uttara Bhadrapada,4,1988-07-17T07:18:02.812500+00:00,1988
+rahu,nakshatra,Purva Bhadrapada,4,1989-03-26T02:18:30.937500+00:00,1989
+rahu,nakshatra,Shatabhisha,4,1989-12-02T21:18:59.062500+00:00,1989
+rahu,nakshatra,Dhanishta,4,1990-08-11T16:19:27.187500+00:00,1990
+rahu,nakshatra,Shravana,4,1991-04-20T11:19:55.312500+00:00,1991
+rahu,nakshatra,Uttara Ashadha,4,1991-12-28T06:20:23.437500+00:00,1991
+rahu,nakshatra,Purva Ashadha,4,1992-09-05T01:15:35.156250+00:00,1992
+rahu,nakshatra,Mula,4,1993-05-14T20:16:03.281250+00:00,1993
+rahu,nakshatra,Jyeshtha,4,1994-01-21T15:16:31.406250+00:00,1994
+rahu,nakshatra,Anuradha,4,1994-09-30T10:16:59.531250+00:00,1994
+rahu,nakshatra,Vishakha,4,1995-06-09T05:17:27.656250+00:00,1995
+rahu,nakshatra,Svati,4,1996-02-16T00:17:55.781250+00:00,1996
+rahu,nakshatra,Chitra,4,1996-10-24T19:18:23.906250+00:00,1996
+rahu,nakshatra,Hasta,4,1997-07-03T14:18:52.031250+00:00,1997
+rahu,nakshatra,Uttara Phalguni,4,1998-03-12T09:19:20.156250+00:00,1998
+rahu,nakshatra,Purva Phalguni,4,1998-11-19T04:19:48.281250+00:00,1998
+rahu,nakshatra,Magha,4,1999-07-28T23:20:16.406250+00:00,1999
+rahu,nakshatra,Ashlesha,4,2000-04-05T18:20:44.531250+00:00,2000
+rahu,nakshatra,Pushya,4,2000-12-13T13:21:12.656250+00:00,2000
+rahu,nakshatra,Punarvasu,4,2001-08-22T08:21:40.781250+00:00,2001
+rahu,nakshatra,Ardra,4,2002-05-01T03:22:08.906250+00:00,2002
+rahu,nakshatra,Mrigashirsha,4,2003-01-07T22:22:37.031250+00:00,2003
+rahu,nakshatra,Rohini,4,2003-09-16T17:23:05.156250+00:00,2003
+rahu,nakshatra,Krittika,4,2004-05-25T12:18:16.875000+00:00,2004
+rahu,nakshatra,Bharani,4,2005-02-01T07:18:45+00:00,2005
+rahu,nakshatra,Ashwini,4,2005-10-11T02:19:13.125000+00:00,2005
+rahu,nakshatra,Revati,4,2006-06-19T21:19:41.250000+00:00,2006
+rahu,nakshatra,Uttara Bhadrapada,4,2007-02-26T16:20:09.375000+00:00,2007
+rahu,nakshatra,Purva Bhadrapada,4,2007-11-05T11:20:37.500000+00:00,2007
+rahu,nakshatra,Shatabhisha,4,2008-07-14T06:21:05.625000+00:00,2008
+rahu,nakshatra,Dhanishta,4,2009-03-23T01:21:33.750000+00:00,2009
+rahu,nakshatra,Shravana,4,2009-11-29T20:22:01.875000+00:00,2009
+rahu,nakshatra,Uttara Ashadha,4,2010-08-08T15:22:30+00:00,2010
+rahu,nakshatra,Purva Ashadha,4,2011-04-17T10:22:58.125000+00:00,2011
+rahu,nakshatra,Mula,4,2011-12-25T05:23:26.250000+00:00,2011
+rahu,nakshatra,Jyeshtha,4,2012-09-02T00:23:54.375000+00:00,2012
+rahu,nakshatra,Anuradha,4,2013-05-11T19:24:22.500000+00:00,2013
+rahu,nakshatra,Vishakha,4,2014-01-18T14:24:50.625000+00:00,2014
+rahu,nakshatra,Svati,4,2014-09-27T09:25:18.750000+00:00,2014
+rahu,nakshatra,Chitra,4,2015-06-06T04:20:30.468750+00:00,2015
+rahu,nakshatra,Hasta,4,2016-02-12T23:20:58.593750+00:00,2016
+rahu,nakshatra,Uttara Phalguni,4,2016-10-21T18:21:26.718750+00:00,2016
+rahu,nakshatra,Purva Phalguni,4,2017-06-30T13:21:54.843750+00:00,2017
+rahu,nakshatra,Magha,4,2018-03-09T08:22:22.968750+00:00,2018
+rahu,nakshatra,Ashlesha,4,2018-11-16T03:22:51.093750+00:00,2018
+rahu,nakshatra,Pushya,4,2019-07-25T22:23:19.218750+00:00,2019
+rahu,nakshatra,Punarvasu,4,2020-04-02T17:23:47.343750+00:00,2020
+rahu,nakshatra,Ardra,4,2020-12-10T12:24:15.468750+00:00,2020
+rahu,nakshatra,Mrigashirsha,4,2021-08-19T07:24:43.593750+00:00,2021
+rahu,nakshatra,Rohini,4,2022-04-28T02:25:11.718750+00:00,2022
+rahu,nakshatra,Krittika,4,2023-01-04T21:25:39.843750+00:00,2023
+rahu,nakshatra,Bharani,4,2023-09-13T16:26:07.968750+00:00,2023
+rahu,nakshatra,Ashwini,4,2024-05-22T11:26:36.093750+00:00,2024
+rahu,nakshatra,Revati,4,2025-01-29T06:27:04.218750+00:00,2025
+rahu,nakshatra,Uttara Bhadrapada,4,2025-10-08T01:27:32.343750+00:00,2025

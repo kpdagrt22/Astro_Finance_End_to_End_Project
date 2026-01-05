@@ -1,7 +1,5 @@
-"""
-Navagraha computation using Skyfield (no C++ needed).
-Install: pip install skyfield
-"""
+# Create the complete rewritten ephemeris_skyfield.py code
+
 
 import logging
 from datetime import datetime, timedelta
@@ -10,8 +8,10 @@ import pandas as pd
 import pytz
 
 try:
-    from skyfield import api, wgs84
+    from skyfield import api
+    from skyfield.api import load, wgs84
     from skyfield.data import hipparcos, mpc
+    from skyfield.constants import GM_SUN_Pitjeva_2005_km3_s2 as GM_SUN_Pitjeva
 except ImportError:
     raise ImportError("Install skyfield: pip install skyfield")
 
@@ -37,11 +37,11 @@ class SkyFieldEphemerisEngine:
     PLANET_NAMES = {
         'sun': 'sun',
         'moon': 'moon',
-        'mars': 'mars',
+        'mars': 'mars barycenter',
         'mercury': 'mercury',
-        'jupiter': 'jupiter',
-        'venus': 'venus',
-        'saturn': 'saturn',
+        'jupiter': 'jupiter barycenter',
+        'venus': 'venus barycenter',
+        'saturn': 'saturn barycenter',
     }
 
     # Node computed separately
@@ -61,45 +61,57 @@ class SkyFieldEphemerisEngine:
         Get planet ecliptic longitude (0-360 degrees).
 
         Args:
-            planet: Planet name
+            planet: Planet name (sun, moon, mars, mercury, jupiter, venus, saturn, rahu, ketu)
             date: UTC datetime
 
         Returns:
             Longitude in degrees [0, 360)
         """
-        from skyfield.api import load, wgs84
-        from skyfield.constants import GM_SUN_Pitjeva
-
         ts, eph = SkyFieldEphemerisEngine._get_ephemeris()
 
         # Create observer at Earth center
         earth = eph['earth']
-        sun = eph['sun']
+        moon = eph['moon']
 
         # Create time
         t = ts.utc(date.year, date.month, date.day, date.hour, date.minute, date.second)
 
+        # Handle Rahu and Ketu (lunar nodes)
+        if planet == 'rahu':
+            # Rahu is the Moon's north node (ascending node)
+            # Using mean node calculation with retrograde motion
+            # Formula: Ω = 125.04452° - 0.0529538083° × days_since_J2000
+            
+            # Days since J2000.0 epoch (January 1, 2000, 12:00 TT)
+            days_since_j2000 = t.tt - 2451545.0
+            
+            # Mean ascending node (Rahu) - moves retrograde
+            rahu_lon = (125.04452 - 0.0529538083 * days_since_j2000) % 360
+            
+            return rahu_lon
+        
+        elif planet == 'ketu':
+            # Ketu is always 180° opposite to Rahu (descending node)
+            rahu_lon = SkyFieldEphemerisEngine.get_planet_longitude('rahu', date)
+            ketu_lon = (rahu_lon + 180) % 360
+            return ketu_lon
+
+        # Handle regular planets
         if planet == 'sun':
-            # Sun from Earth
+            sun = eph['sun']
             astrometric = earth.at(t).observe(sun).apparent()
         elif planet == 'moon':
-            # Moon from Earth
-            moon = eph['moon']
             astrometric = earth.at(t).observe(moon).apparent()
         elif planet in SkyFieldEphemerisEngine.PLANET_NAMES:
-            # Other planets
             planet_obj = eph[SkyFieldEphemerisEngine.PLANET_NAMES[planet]]
             astrometric = earth.at(t).observe(planet_obj).apparent()
         else:
             raise ValueError(f"Unknown planet: {planet}")
 
-        # Get ecliptic longitude
-        ecliptic_lon, ecliptic_lat = astrometric.apparent_equatorial_to_ecliptic().lonlat
-        longitude = ecliptic_lon.degrees % 360
+        # Get ecliptic longitude using correct Skyfield API
+        ecliptic_lon, ecliptic_lat, _ = astrometric.ecliptic_latlon()
 
-        # For Ketu, add 180 degrees
-        if planet == 'ketu':
-            longitude = (longitude + 180) % 360
+        longitude = ecliptic_lon.degrees % 360
 
         return longitude
 
@@ -176,14 +188,16 @@ class SkyFieldEphemerisEngine:
             except Exception as e:
                 logger.warning(f"Error at {current_date}: {e}")
 
-            # Adaptive step
+            # Adaptive step based on planet speed
             if planet == 'moon':
                 step_days = 1
             elif planet in ['mercury', 'venus']:
                 step_days = 2
             elif planet in ['sun', 'mars']:
                 step_days = 5
-            else:
+            elif planet in ['rahu', 'ketu']:
+                step_days = 15  # Nodes move very slowly
+            else:  # jupiter, saturn
                 step_days = 30
 
             current_date += timedelta(days=step_days)
@@ -217,7 +231,7 @@ class SkyFieldEphemerisEngine:
 
     @staticmethod
     def compute_all_planets(start_year=1900, end_year=2025, output_dir=None):
-        """Compute all 9 planets."""
+        """Compute all 9 planets (Navagraha)."""
         from pathlib import Path
 
         if output_dir is None:
@@ -227,6 +241,7 @@ class SkyFieldEphemerisEngine:
 
         output_dir.mkdir(parents=True, exist_ok=True)
 
+        # All 9 planets (Navagraha)
         planets = list(SkyFieldEphemerisEngine.PLANET_NAMES.keys()) + SkyFieldEphemerisEngine.NODES
         endpoint_types = ['rashi', 'nakshatra']
 
@@ -235,7 +250,7 @@ class SkyFieldEphemerisEngine:
 
         for planet in planets:
             for endpoint_type in endpoint_types:
-                logger.info(f"\n{'='*60}")
+                logger.info(f"\\n{'='*60}")
                 logger.info(f"{planet.upper()} - {endpoint_type.upper()}")
                 logger.info(f"{'='*60}")
 
@@ -254,12 +269,12 @@ class SkyFieldEphemerisEngine:
                 except Exception as e:
                     logger.error(f"Failed to compute {planet}: {e}")
 
-        # Merge
+        # Merge all results
         if merged_rows:
             merged_df = pd.DataFrame(merged_rows)
             merged_file = output_dir / 'events_all_planets_merged.csv'
             merged_df.to_csv(merged_file, index=False)
-            logger.info(f"\n✓ Merged: {merged_file} ({len(merged_df)} total events)")
+            logger.info(f"\\n✓ Merged: {merged_file} ({len(merged_df)} total events)")
             all_results['merged'] = merged_df
 
         return all_results
